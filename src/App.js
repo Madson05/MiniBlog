@@ -39,7 +39,7 @@ function App() {
   useEffect(() => {
     onAuthStateChanged(auth, (user) => {
       setUser(user);
-      console.log(user.email)
+      console.log(user.displayName)
     });
   }, [auth]);
 
