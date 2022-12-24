@@ -1,6 +1,6 @@
 
 import {BrowserRouter, Routes, Route, Navigate} from "react-router-dom"
-import { onAuthStateChanged } from "firebase/auth";
+import { getAuth, onAuthStateChanged } from "firebase/auth";
 
 
 // hooks 
@@ -20,24 +20,28 @@ import About from './pages/About/About';
 import Home from './pages/Home/Home';
 import Login from './pages/Login/Login';
 import Register from './pages/Register/Register';
+import Dashboard from "./pages/Dashboard/Dashboard";
+import CreatePost from "./pages/CreatePost/CreatePost";
 
 // components
 import Navbar from './components/Navbar/Navbar';
 import Footer from './components/Footer/Footer';
 
 
+
 function App() {
 
   const [user, setUser] = useState(undefined);
-  const auth = useAuthentication();
+  const {auth} = useAuthentication();
 
   const loadingUser = user === undefined;
 
   useEffect(() => {
-    onAuthStateChanged(auth, (user) =>{
+    onAuthStateChanged(auth, (user) => {
       setUser(user);
-    })
-  }, [auth])
+      console.log(user.email)
+    });
+  }, [auth]);
 
   if(loadingUser){
     return <p>Carregando...</p>
@@ -57,6 +61,8 @@ function App() {
               <Route path='/about' element={<About/>}/>
               <Route path='/login' element={<Login/>}/>
               <Route path='/register' element={<Register/>}/>
+              <Route path='/dashboard' element={<Dashboard/>}/>
+              <Route path='/posts/create' element={<CreatePost/>}/>
 
             </Routes>
             
