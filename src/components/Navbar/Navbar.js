@@ -22,7 +22,7 @@ const Navbar = () => {
             Home
           </NavLink>
         </li>
-        {!user?(
+        {!user&&(
           <>
             <li>
               <NavLink
@@ -41,8 +41,8 @@ const Navbar = () => {
               </NavLink>
             </li>
           </>
-        ): console.log("jjj")}
-        {user?(
+        )}
+        {user&&(
           <>
             <li>
               <NavLink
@@ -61,7 +61,7 @@ const Navbar = () => {
               </NavLink>
             </li>
           </>
-        ): console.log(user)}
+        )}
         <li>
           <NavLink
             to="/about"
