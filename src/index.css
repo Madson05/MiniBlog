@@ -80,7 +80,7 @@ textarea{
 }
 
 
-.btn .btn-dark{
+.btn.btn-dark{
   background-color: #000;
   border-radius: 0;
 }
@@ -112,7 +112,7 @@ button[disabled]{
   background-color: #aaa;
 }
 
-.container .error{
+.container.error{
   color: #721c24;
   background-color: #f8d7da;
   border: 1px solid #f5c6cb;
