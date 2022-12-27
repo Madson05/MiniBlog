@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
-import { db } from "../firebase/config"
-import { collection, query, orderBy, Onsnapshot, where, QuerySnapshot } from "firebase/firestore";
+import { db } from "../firebase/config";
+import { collection, query, orderBy, onSnapshot, where } from "firebase/firestore";
 
 
 
@@ -17,11 +17,13 @@ export const useFetchDocuments = (docCollection, search = null, uid = null) => {
     useEffect(()=>{
 
         async function loadData(){
-            if(cancelled) return
+            if(cancelled) {
+              return
+            }
 
             setLoading(true)
 
-            const collectionRef = await collection(db, docCollection)
+            const collectionRef = await collection(db, docCollection);
 
             try{
                 let q;
@@ -29,33 +31,29 @@ export const useFetchDocuments = (docCollection, search = null, uid = null) => {
                 // busca
                 // dashboard
 
-                q = await query(collectionRef, orderBy("CreatedAt", "desc"))
+                q = await query(collectionRef, orderBy("createdAt", "desc"))
 
-                await Onsnapshot(q,  (QuerySnapshot) => {
-
-
-                    setDocuments(
-                        QuerySnapshot.docs.map((doc) => {
-                            id: doc.id,
-                            {...doc.data()}
-
-                    })
-                    )
-                })
-
-                setLoading(false)
-
-            }catch(error){
+                await onSnapshot(q, (querySnapshot) => {
+                  setDocuments(
+                    querySnapshot.docs.map((doc) => ({
+                      id: doc.id,
+                      ...doc.data(),
+                    }))
+                  );
+                });
+              } catch (error) {
                 console.log(error);
                 setError(error.message);
-                setLoading(false)
-
-            }    
-        }
-
-        loadData()
+              }
+        
+              setLoading(false);
+            }
+        
+            loadData();
 
     }, [docCollection, search, uid, cancelled])
+
+    console.log(documents)
 
 
     useEffect(() => {
