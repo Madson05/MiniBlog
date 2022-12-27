@@ -18,10 +18,33 @@ const CreatePost = () => {
 
   const { insertDocument, response } = useInsertDocument("posts");
 
+  
   const handleSubmit = (e) => {
     e.preventDefault();
     setFormError("");
 
+
+
+    // validar imagem
+
+    try{
+      new URL(image)
+    }catch(error){
+      setFormError("A imagem precisa ser uma URL.")
+    }
+
+
+    // array de tags
+
+    const tagsArray = tags.split(",").map((tag)=>tag.trim().toLowerCase())
+
+    // chegar todos os valores
+
+    if(!title||!image||!tags||!body){
+      setFormError("Por favor, preencha todos os campos!")
+    }
+
+    if(formError) return;
  
  
  
@@ -34,10 +57,14 @@ const CreatePost = () => {
       title,
       image,
       body,
-      tags: tags,
+      tags: tagsArray,
       uid: user.uid,
       createdBy: user.displayName,
     });
+
+    // redirect to the home page
+
+    navigate("/")
 
     
   };
