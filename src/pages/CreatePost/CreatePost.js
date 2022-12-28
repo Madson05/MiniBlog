@@ -31,6 +31,7 @@ const CreatePost = () => {
       new URL(image)
     }catch(error){
       setFormError("A imagem precisa ser uma URL.")
+      return
     }
 
 
@@ -42,6 +43,7 @@ const CreatePost = () => {
 
     if(!title||!image||!tags||!body){
       setFormError("Por favor, preencha todos os campos!")
+      return
     }
 
     if(formError) return;
