@@ -59,7 +59,7 @@ function App() {
       
 
       <AuthProvider value = {user}>
-        <BrowserRouter>
+        <BrowserRouter basename={process.env.PUBLIC_URL}>
           <Navbar/>
           <div className="container">
             <Routes>

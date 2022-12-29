@@ -1,10 +1,12 @@
 .post_details{
     margin-bottom: 2em;
+    margin-top: 2em;
 
 }
 
 .post_details img{
     max-width: 600px;
+    
 }
 
 .post_details h2{
