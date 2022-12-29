@@ -5,7 +5,7 @@ import { Link } from "react-router-dom"
 // hooks
 
 import {useAuthValue} from "../../context/AuthContext";
-import { useFetchDocuments } from "../../hooks/useFetchDocument";
+import { useFetchDocuments } from "../../hooks/useFetchDocuments";
 
 const Dashboard = () => {
 
@@ -14,7 +14,14 @@ const Dashboard = () => {
 
   // posts do usuario
 
-  const posts = []
+  const {documents : posts, loading, error} = useFetchDocuments("posts", null, uid)
+  const deleteDocument = (id) => {
+
+  }
+
+  if(loading) {
+    return <p>Carregando...</p>
+  }
 
   return (
     <div>
@@ -27,6 +34,28 @@ const Dashboard = () => {
             <Link to = "posts/create" className="btn">Criar primeiro post</Link>
           </div>
           
+        )}
+        
+        {console.log(posts)}
+
+        {posts && (
+          <>
+            <div>
+              <span>Titulo</span>
+              <span>Ações</span>
+            </div>
+            {posts.map((post)=>(
+              <div key={post.id}>
+                <p>{post.title}</p>
+                <div>
+                  <Link to = {`posts/${post.id}`} className = "btn btn-outline"> Ver </Link>
+                  <Link to = {`posts/edit/${post.id}`} className = "btn btn-outline"> Ver </Link>
+                  <button onClick={()=> deleteDocument(post.id)} className = "btn btn-outline btn-danger">Excluir</button>
+                </div>
+              </div>
+            ))}
+
+          </>
         )}
     </div>
   )
